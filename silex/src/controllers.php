@@ -74,10 +74,9 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
                     'active' => 'new',
                     'user' => $user['username'],
                     'session' => $session,
-                    'inputError' => false,
-                    'gtcError' => false,
                     'title' => '',
-                    'text' => ''
+                    'text' => '',
+                    'gtcAccepted' => false
                 ]
             );
         }
@@ -85,6 +84,7 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
             $title = $request->get('title');
             $text = $request->get('text');
             $gtcAccepted = $request->get('gtc');
+
             if ($title and $text and $gtcAccepted) {
 
                 $created_at = date("c");
@@ -101,32 +101,21 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
                 return $app->redirect('/blog');
 
             } elseif (!$title or !$text) {
-                return $template->render(
-                    'new.html.php',
-                    [
-                        'active' => 'new',
-                        'user' => $user['username'],
-                        'session' => $session,
-                        'inputError' => true,
-                        'gtcError' => false,
-                        'title' => $title,
-                        'text' => $text,
-                    ]
-                );
+                $app['session']->getFlashBag()->add('alert-danger', 'Please fill out all fields!');
             } else {
-                return $template->render(
-                    'new.html.php',
-                    [
-                        'active' => 'new',
-                        'user' => $user['username'],
-                        'session' => $session,
-                        'inputError' => false,
-                        'gtcError' => true,
-                        'title' => $title,
-                        'text' => $text,
-                    ]
-                );
+                $app['session']->getFlashBag()->add('alert-danger', 'Please accept our terms and conditions!');
             }
+            return $template->render(
+                'new.html.php',
+                [
+                    'active' => 'new',
+                    'user' => $user['username'],
+                    'session' => $session,
+                    'title' => $title,
+                    'text' => $text,
+                    'gtcAccepted' => $gtcAccepted
+                ]
+            );
         }
     } else {
         $app->abort(401);
