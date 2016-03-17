@@ -110,7 +110,21 @@ $slots = $view['slots'];
     </div>
 </nav>
 
+<!-- main content -->
 <div class="container theme-showcase" role="main">
+
+    <?php
+    foreach ($session->getFlashBag()->get('alert-success', array()) as $message) {
+        echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
+    }
+    ?>
+    <?php
+    foreach ($session->getFlashBag()->get('alert-danger', array()) as $message) {
+        echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
+    }
+    ?>
+
+
     <?php $slots->output('_content'); ?>
 </div>
 
