@@ -1,17 +1,16 @@
 <?php
-use Silex\Provider\LocaleServiceProvider;
+use Silex\Provider\CsrfServiceProvider;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
+use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
-use Silex\Provider\DoctrineServiceProvider;
-use Silex\Provider\CsrfServiceProvider;
-
-use Symfony\Component\Templating\PhpEngine;
-use Symfony\Component\Templating\TemplateNameParser;
-use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\DelegatingEngine;
 use Symfony\Component\Templating\Helper\SlotsHelper;
-use Symfony\Bridge\Twig\TwigEngine;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
 
 $app['debug'] = true;
 
@@ -19,6 +18,7 @@ $app->register(new TranslationServiceProvider());
 $app->register(new LocaleServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new CsrfServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../web/templates',
