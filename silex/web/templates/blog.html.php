@@ -14,7 +14,7 @@ $view->extend('layout.html.php') ?>
                 <?= substr($dbEntry['text'], 0, 60) ?>
             </h3>
         </a>
-        <p class="post-meta">Posted by <?= $dbEntry['author'] ?></a> on <?= $dbEntry['created_at'] ?></p>
+        <p class="post-meta">Posted by <?= $dbEntry['author'] ?> on <?= $dbEntry['created_at'] ?></p>
     </div>
     <hr>
 <?php endforeach; ?>

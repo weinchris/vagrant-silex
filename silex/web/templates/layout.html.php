@@ -4,8 +4,6 @@
  */
 $slots = $view['slots'];
 ?>
-
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -34,13 +32,11 @@ $slots = $view['slots'];
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/home">
-                <nobr>
-                    <img src="/img/plumbus_icon.png" width=30 height=30
-                         alt="regular Plumbus"/>
-                    Plumbify
-                </nobr>
+            <a href="/home" class="pull-left">
+                <img src="/img/plumbus_icon.png" width=30 height=30
+                     alt="regular Plumbus"/>
             </a>
+            <a class="navbar-brand" href="/home">Plumbify</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -74,18 +70,18 @@ $slots = $view['slots'];
                             <div class="row">
                                 <div class="col-md-12">
                                     <?php if ($user) : ?>
+                                        <form action="/logout">
                                         <div class="form-group">
-                                            <a href="/logout">
-                                                <button type="button" class="btn btn-primary btn-block">
+                                            <button type="submit" class="btn btn-primary btn-block">
                                                     <span class="glyphicon glyphicon-log-out"></span> Log out
                                                 </button>
-                                            </a>
                                         </div>
+                                        </form>
                                     <?php else : ?>
-                                        <form class="form" role="form" method="post" action="/login"
+                                        <form class="form" method="post" action="/login"
                                               accept-charset="UTF-8" id="login-nav">
                                             <div class="form-group">
-                                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                <label class="sr-only" for="loginUsername">Username</label>
                                                 <input type="text" class="form-control" id="loginUsername"
                                                        name="loginUsername"
                                                        placeholder="Username" required>
