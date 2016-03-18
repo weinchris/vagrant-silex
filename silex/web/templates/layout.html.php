@@ -33,7 +33,7 @@ $slots = $view['slots'];
                 <span class="icon-bar"></span>
             </button>
             <a href="/home" class="pull-left">
-                <img src="/img/plumbus_icon.png" width=30 height=30
+                <img src="/img/plumbus_icon.png" width=50
                      alt="regular Plumbus"/>
             </a>
             <a class="navbar-brand" href="/home">Plumbify</a>
