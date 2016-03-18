@@ -5,22 +5,31 @@
         This blog shows how they are made.</p>
     <p><a href="/blog" class="btn btn-primary btn-lg" role="button">Read Blog &raquo;</a></p>
 </div>
-<div id="home-carousel" class="carousel slide" data-ride="carousel">
+<div id="home-carousel" class="carousel slide">
     <ol class="carousel-indicators">
         <li data-target="#home-carousel" data-slide-to="0" class="active"></li>
         <li data-target="#home-carousel" data-slide-to="1"></li>
         <li data-target="#home-carousel" data-slide-to="2"></li>
+        <li data-target="#home-carousel" data-slide-to="3"></li>
+        <li data-target="#home-carousel" data-slide-to="4"></li>
     </ol>
-    <!--TODO add images-->
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img class="img-responsive" src="img/img1.jpg" alt="edit">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="//www.youtube.com/embed/eMJk4y9NGvE"></iframe>
+            </div>
         </div>
         <div class="item">
-            <img class="img-responsive" src="img/img2.jpg" alt="edit">
+            <img class="img-responsive" src="/img/Plumbus_1.png" alt="regular Plumbus at home">
         </div>
         <div class="item">
-            <img class="img-responsive" src="img/img3.jpg" alt="edit">
+            <img class="img-responsive" src="/img/Plumbus_2.png" alt="the fleeb is rubbed">
+        </div>
+        <div class="item">
+            <img class="img-responsive" src="/img/Plumbus_3.png" alt="blamphs rub against chumbles">
+        </div>
+        <div class="item">
+            <img class="img-responsive" src="/img/Plumbus_4.png" alt="regular old Plumbus">
         </div>
     </div>
 

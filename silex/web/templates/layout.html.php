@@ -14,6 +14,9 @@ $slots = $view['slots'];
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Plumbify</title>
+    <link rel="icon"
+          type="image/png"
+          href="/img/plumbus_icon.png">
 
     <!-- Bootstrap -->
     <link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +34,13 @@ $slots = $view['slots'];
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/home">Plumbify</a>
+            <a class="navbar-brand" href="/home">
+                <nobr>
+                    <img src="/img/plumbus_icon.png" width=30 height=30
+                         alt="regular Plumbus"/>
+                    Plumbify
+                </nobr>
+            </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -64,7 +73,6 @@ $slots = $view['slots'];
                         <li>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!--TODO if else-->
                                     <?php if ($user) : ?>
                                         <div class="form-group">
                                             <a href="/logout">
