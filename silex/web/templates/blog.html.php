@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $content array
+ * @var array
  * @var $view Symfony\Component\Form\ChoiceList\View\ChoiceView
  */
 $view->extend('layout.html.php') ?>
@@ -18,3 +18,4 @@ $view->extend('layout.html.php') ?>
     </div>
     <hr>
 <?php endforeach; ?>
+

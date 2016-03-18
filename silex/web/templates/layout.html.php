@@ -1,9 +1,7 @@
 <?php
 /**
- * @var $slots \Symfony\Component\Templating\Helper\SlotsHelper
- *
+ * @var \Symfony\Component\Templating\Helper\SlotsHelper
  */
-
 $slots = $view['slots'];
 ?>
 
@@ -52,13 +50,11 @@ $slots = $view['slots'];
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <b>
-                            <!--TODO debug-->
-                            <? if ($user == null) : ?>
+                            <?php if ($user) : ?>
                                 <?= $user ?>
-                            <? endif; ?>
-                            <? if ($user != null) : ?>
-                                <?= "Login" ?>
-                            <? endif; ?>
+                            <?php else : ?>
+                                <?= 'Login' ?>
+                            <?php endif; ?>
                         </b>
                         <span
                             class="caret">
@@ -69,38 +65,35 @@ $slots = $view['slots'];
                             <div class="row">
                                 <div class="col-md-12">
                                     <!--TODO if else-->
-                                    <?php if ($user == null) : ?>
-                                    <form class="form" role="form" method="post" action="/login"
-                                          accept-charset="UTF-8" id="login-nav">
+                                    <?php if ($user) : ?>
                                         <div class="form-group">
-                                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                            <input type="text" class="form-control" id="loginUsername"
-                                                   name="loginUsername"
-                                                   placeholder="Username" required>
+                                            <a href="/logout">
+                                                <button type="button" class="btn btn-primary btn-block">
+                                                    <span class="glyphicon glyphicon-log-out"></span> Log out
+                                                </button>
+                                            </a>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="loginPassword">Password</label>
-                                            <input type="password" class="form-control" id="loginPassword"
-                                                   name="loginPassword"
-                                                   placeholder="Password" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                                        </div>
-                                    </form>
+                                    <?php else : ?>
+                                        <form class="form" role="form" method="post" action="/login"
+                                              accept-charset="UTF-8" id="login-nav">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                <input type="text" class="form-control" id="loginUsername"
+                                                       name="loginUsername"
+                                                       placeholder="Username" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="loginPassword">Password</label>
+                                                <input type="password" class="form-control" id="loginPassword"
+                                                       name="loginPassword"
+                                                       placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                            </div>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
-                                <?php endif; ?>
-                                <?php if ($user != null) : ?>
-                                    <div class="form-group">
-                                        <!--TODO edit to post method-->
-                                        <a href="/logout">
-                                            <button type="button" class="btn btn-primary btn-block"
-                                                    formmethod="post" formaction="/logout"><span
-                                                    class="glyphicon glyphicon-log-out"></span> Log out
-                                            </button>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
                             </div>
                         </li>
                     </ul>
@@ -130,7 +123,7 @@ $slots = $view['slots'];
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> <? echo date("Y"); ?> Christof
+        <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> <?php echo date('Y'); ?> Christof
             Weinreich</p>
     </div>
 </footer>

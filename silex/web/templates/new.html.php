@@ -16,7 +16,7 @@
             <input type="checkbox"
                    name="gtc"
                 <?php if ($gtcAccepted) {
-                    echo "checked";
+                    echo 'checked';
                 } ?>>
             Accept terms and conditions
         </label>

@@ -1,14 +1,13 @@
 <?php
+
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @var $app Silex\Application
- * @var $db_connection Doctrine\DBAL\Connection
- * @var $template Symfony\Component\Form\Extension\Templating\Delegating Engine
- * @var $user Silex\Provider\SessionServiceProvider
- * @var $user Silex\Provider\SessionServiceProvider
+ * @var Silex\Application
+ * @var $db_connection    Doctrine\DBAL\Connection
+ * @var $template         Symfony\Component\Form\Extension\Templating\Delegating Engine
+ * @var $session          Silex\Provider\SessionServiceProvider
  */
-
 $db_connection = $app['db'];
 $template = $app['templating'];
 $session = $app['session'];
@@ -25,7 +24,7 @@ $app->get('/home', function () use ($template, $user, $session) {
         [
             'active' => 'home',
             'user' => $user['username'],
-            'session' => $session
+            'session' => $session,
         ]
     );
 });
@@ -34,13 +33,14 @@ $app->get('/blog', function () use ($template, $db_connection, $user, $session) 
     $content = $db_connection->fetchAll(
         'SELECT * from blog_post ORDER BY id DESC'
     );
+
     return $template->render(
         'blog.html.php',
         [
             'active' => 'blog',
             'user' => $user['username'],
             'session' => $session,
-            'content' => $content
+            'content' => $content,
         ]
     );
 });
@@ -49,24 +49,23 @@ $app->get('/post/{postId}', function ($postId) use ($template, $db_connection, $
     $content = $db_connection->fetchAssoc(
         'SELECT * from blog_post WHERE id=?', array($postId)
     );
-    if (!$content) {
-        $app->abort(404);
-    } else {
+    if ($content) {
         return $template->render(
             'blogpost.html.php',
             [
                 'active' => 'blog',
                 'user' => $user['username'],
                 'session' => $session,
-                'content' => $content
+                'content' => $content,
             ]
         );
+    } else {
+        $app->abort(404);
     }
 });
 
-//TODO add server exception, when no user is logged in
 $app->match('/new', function (Request $request) use ($template, $db_connection, $user, $app, $session) {
-    if ($user) {
+    if ($user) { //user logged in ?
         if ($request->isMethod('GET')) {
             return $template->render(
                 'new.html.php',
@@ -76,7 +75,7 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
                     'session' => $session,
                     'title' => '',
                     'text' => '',
-                    'gtcAccepted' => false
+                    'gtcAccepted' => false,
                 ]
             );
         }
@@ -86,25 +85,24 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
             $gtcAccepted = $request->get('gtc');
 
             if ($title and $text and $gtcAccepted) {
-
-                $created_at = date("c");
-
+                $created_at = date('c');
                 $db_connection->insert(
                     'blog_post',
                     [
                         'title' => $title,
                         'text' => $text,
                         'author' => $user['username'],
-                        'created_at' => $created_at
+                        'created_at' => $created_at,
                     ]
                 );
-                return $app->redirect('/blog');
 
+                return $app->redirect('/blog');
             } elseif (!$title or !$text) {
-                $app['session']->getFlashBag()->add('alert-danger', 'Please fill out all fields!');
+                $session->getFlashBag()->add('alert-danger', 'Please fill out all fields!');
             } else {
-                $app['session']->getFlashBag()->add('alert-danger', 'Please accept our terms and conditions!');
+                $session->getFlashBag()->add('alert-danger', 'Please accept our terms and conditions!');
             }
+
             return $template->render(
                 'new.html.php',
                 [
@@ -113,7 +111,7 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
                     'session' => $session,
                     'title' => $title,
                     'text' => $text,
-                    'gtcAccepted' => $gtcAccepted
+                    'gtcAccepted' => $gtcAccepted,
                 ]
             );
         }
@@ -122,7 +120,6 @@ $app->match('/new', function (Request $request) use ($template, $db_connection, 
     }
 });
 
-//TODO add login error
 $app->match('/login', function (Request $request) use ($app, $db_connection, $session) {
     $referer = $request->headers->get('referer');
     $username = $request->get('loginUsername');
@@ -132,15 +129,18 @@ $app->match('/login', function (Request $request) use ($app, $db_connection, $se
     )['password'];
     if ($username and $password === $dbPassword) {
         $session->set('user', array('username' => $username));
-        $app['session']->getFlashBag()->add('alert-success', 'You are successfully logged in');
+        $session->getFlashBag()->add('alert-success', 'You are successfully logged in');
+
         return $app->redirect($referer);
     } else {
-        $app['session']->getFlashBag()->add('alert-danger', 'The user name or password is incorrect');
+        $session->getFlashBag()->add('alert-danger', 'The username or password is incorrect');
+
         return $app->redirect($referer);
     }
 });
 
 $app->match('/logout', function () use ($app, $session) {
     $session->remove('user');
+
     return $app->redirect('/home');
 });

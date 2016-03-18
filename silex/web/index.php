@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
 
-/**
- * @var $app Silex\Application
+require_once __DIR__.'/../vendor/autoload.php';
+
+/*
+ * @var Silex\Application
  */
-
 $app = new Silex\Application();
 
 require __DIR__.'/../src/app.php';
